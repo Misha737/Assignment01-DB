@@ -2,7 +2,9 @@ use a01;
 
 show tables;
 
+-- CTEs
 with
+	-- поєдную через join всі таблиці
 	purchase_select as (
 		select
 			c.name as customer_name,
@@ -20,6 +22,8 @@ with
 		left join employees e
 			on e.id = pur.employee_id
 	),
+	
+	-- фультрую продокти які є не "Cake"
 	without_cake as (
 		select *
 		from
@@ -28,6 +32,7 @@ with
 			product_name != 'Cake'
 	),
 	
+	-- через агрегацію вибираю останню покупку покупця та вибираю тільки ті покупки, які були зроблені в 2023 рік
 	purchases_2023 as (
 		select
 			customer_name,
@@ -39,6 +44,7 @@ with
 		having last_date > '2023-01-01' and last_date < '24-01-01'
 	),
 	
+	-- вибираю тільки ті покупуи, які були зроблені в 2023 рік
 	purchases_2024 as (
 		select
 				customer_name,
@@ -50,6 +56,7 @@ with
 			having last_date > '2024-01-01' and last_date < '2025-01-01'
 	),
 	
+	-- об`єдную 2023 та 2024 роки 
 	unioned as (
 		select *
 		from 
@@ -60,6 +67,7 @@ with
 		order by last_date
 	),
 	
+	-- так як через групування не всі колонки я можу вибрати мені потрібно вказати за яким критерієм я буду вибирати рядки із групи.
 	all_columns as (
 		select *
 		from without_cake w
@@ -69,8 +77,9 @@ with
 		)
 	)
 
+	-- впорядковую за датою та обмежою до 10 рядків
 	select *
-	from
-		all_columns
-	order by purchase_date
-	limit 10;
+		from
+			all_columns
+		order by purchase_date
+		limit 10;

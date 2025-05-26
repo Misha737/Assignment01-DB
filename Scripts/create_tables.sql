@@ -5,9 +5,7 @@ use a01;
 create table customers (
 	id int primary key auto_increment,
 	name varchar(50) not null,
-	birthday date not null,
-	good_id int not null,
-	purchase_id int not null
+	birthday date not null
 );
 
 create table employees (

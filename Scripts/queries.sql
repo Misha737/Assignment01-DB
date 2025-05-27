@@ -41,7 +41,7 @@ with
 			without_cake w
 		group by
 			customer_name
-		having last_date > '2023-01-01' and last_date < '24-01-01'
+		having last_date between '2023-01-01' and '2023-12-31'
 	),
 	
 	-- вибираю тільки ті покупуи, які були зроблені в 2023 рік
@@ -53,7 +53,7 @@ with
 				without_cake w
 			group by
 				customer_name
-			having last_date > '2024-01-01' and last_date < '2025-01-01'
+			having last_date between '2024-01-01' and '2024-12-31'
 	),
 	
 	-- об`єдную 2023 та 2024 роки 

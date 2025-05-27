@@ -25,7 +25,7 @@ create table purchases (
 	good_id int null,
 	customer_id int not null,
 	premises_id int not null,
-	employees_id int
+	employee_id int
 );
 
 create table premises (
